@@ -3,8 +3,8 @@ package fr.unice.idse.model;
 import java.util.ArrayList;
 
 public class Building {
-	private String name;
-	private ArrayList<Floor> floors;
+	protected String name;
+	protected ArrayList<Floor> floors;
 	
 	public Building(String name) {
 		this.floors = new ArrayList<Floor>();

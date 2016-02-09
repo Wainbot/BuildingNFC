@@ -14,6 +14,10 @@ public class Model {
 		return model;
 	}
 	
+	public static void clear() {
+		model = null;
+	}
+	
 	public App getApp() {
 		return app;
 	}

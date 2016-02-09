@@ -17,6 +17,17 @@ import org.codehaus.jettison.json.JSONObject;
 import fr.unice.idse.model.Building;
 import fr.unice.idse.model.Model;
 
+/**
+ * Arbre des routes : <br/>
+ * <code> 
+ * /building <br/>
+ * |-- GET <br/>
+ * |-- POST <br/>
+ * |-- /{tagid} <br/>
+ * |-- |-- GET <br/>
+ * </code>
+ */
+
 @Path("/building")
 public class BuildingService {
 	/**
@@ -24,11 +35,12 @@ public class BuildingService {
 	 * @return Response 200 With a json containing the list of buildings : <br />
 	 *         {"buildings":[{"name":String}]}
 	 * @throws JSONException - If there is a syntax error in the source string. 
+	 * @author Damien Clemenceau
 	 */
 	@GET
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getMaps() throws JSONException {
+	public Response getBuildings() throws JSONException {
 		Model model = Model.getInstance();
 		ArrayList<Building> buildings = model.getApp().getBuildings();
 		
@@ -51,6 +63,7 @@ public class BuildingService {
 	 * @return Response 401 For invalid JSON <br/>
 	 *         Response 405 If the building name or tagid is already taken <br/>
 	 *         Response 200 If the building was succesfully added
+	 * @author Damien Clemenceau
 	 */
 	@PUT
 	@Path("/")
@@ -64,12 +77,31 @@ public class BuildingService {
 			}
 			
 			if(!Model.getInstance().getApp().addBuilding(new Building(json.getString("name")))) {
-				return Response.status(405).entity("{\"error\":\"Invalid building\"}").build();
+				return Response.status(405).entity("{\"error\":\"Invalid building name\"}").build();
 			}
 			
 		} catch (JSONException e) {
 			return Response.status(401).entity("{\"error\":\"Fail to create JSON object\"}").build();
 		}
 		return Response.status(200).entity("{\"success\":\"Building added succesfully\"}").build();
+	}
+	
+	/**
+	 * 
+	 * Get the building with the specified tag id.
+	 * @param tagId The id of a NFC tag
+	 * @return Response 405 If the tag id is not attach to a building <br/>
+	 *         Response 200 If the building was successfully added
+	 * @author Damien Clemenceau
+	 */
+	@GET
+	@Path("{tagid}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getBuilding(@PathParam("tagid") String tagId) {		
+		Building building = Model.getInstance().getApp().findBuildingByTagId(tagId);
+		if(building == null) {
+			return Response.status(405).entity("{\"error\":\"The building with this tag id was not found\"}").build();
+		}
+		return Response.status(200).entity("{\"name\":\"" + building.getName() + "\"}").build();
 	}
 }
