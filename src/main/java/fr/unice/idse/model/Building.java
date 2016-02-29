@@ -4,25 +4,31 @@ import java.util.ArrayList;
 
 public class Building {
 	protected String name;
-	protected ArrayList<Floor> floors;
+	protected String description;
+ 	protected ArrayList<Level> levels;
+	protected byte[] image;
 	
 	public Building(String name) {
-		this.floors = new ArrayList<Floor>();
+		this.levels = new ArrayList<Level>();
 		this.name = name;
 	}
 	
-	public void addFloor(Floor floor) {
-		this.floors.add(floor);
+	public void addFloor(Level level) {
+		this.levels.add(level);
 	}
 	
-	public Floor getFloorAt(int index) {
-		if(index < this.floors.size() && index > 0) {
-			return this.floors.get(index);
+	public Level getFloorAt(int index) {
+		if(index < this.levels.size() && index > 0) {
+			return this.levels.get(index);
 		}
 		return null;
 	}
 	
 	public String getName() {
 		return this.name;
+	}
+	
+	public byte[] getImage() {
+		return image;
 	}
 }

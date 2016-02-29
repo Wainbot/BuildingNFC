@@ -21,10 +21,17 @@ import fr.unice.idse.model.Model;
  * Arbre des routes : <br/>
  * <code> 
  * /building <br/>
- * |-- GET <br/>
- * |-- POST <br/>
+ * |-- GET (list buildings) <br/>
+ * |-- POST(add building)  <br/>
  * |-- /{tagid} <br/>
- * |-- |-- GET <br/>
+ * |-- |-- PUT  (update building info) <br/>
+ * |-- |-- DELETE (delete building)  <br/>
+ * |-- |-- GET  (info building + list levels)<br/>
+ * |-- |-- POST (add level) <br/>
+ * |-- |-- /{level} <br/>
+ * |-- |-- |-- PUT (update level info) <br/>
+ * |-- |-- |-- DELETE (delete level)  <br/>
+ * |-- |-- |-- GET (info level) <br/>
  * </code>
  */
 
@@ -92,16 +99,22 @@ public class BuildingService {
 	 * @param tagId The id of a NFC tag
 	 * @return Response 405 If the tag id is not attach to a building <br/>
 	 *         Response 200 If the building was successfully added
+	 * @throws JSONException
 	 * @author Damien Clemenceau
 	 */
 	@GET
 	@Path("{tagid}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getBuilding(@PathParam("tagid") String tagId) {		
+	public Response getBuilding(@PathParam("tagid") String tagId) throws JSONException {		
 		Building building = Model.getInstance().getApp().findBuildingByTagId(tagId);
 		if(building == null) {
 			return Response.status(405).entity("{\"error\":\"The building with this tag id was not found\"}").build();
 		}
-		return Response.status(200).entity("{\"name\":\"" + building.getName() + "\"}").build();
+		
+		JSONObject json = new JSONObject();
+		json.put("name", building.getName());
+		json.put("image", building.getImage());
+		
+		return Response.status(200).entity(json.toString()).build();
 	}
 }

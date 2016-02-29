@@ -3,5 +3,5 @@
 ## Contributors
 
 * Parpex Regis
-* Clemenceau Damien
-* Froment Jeremy
+* Clémenceau Damien
+* Froment Jérémy

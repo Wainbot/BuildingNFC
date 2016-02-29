@@ -3,10 +3,7 @@ package fr.unice.idse.rfid;
 import java.util.List;
 
 import javax.smartcardio.*;
-/**
- * Application launch
- *
- */
+
 @SuppressWarnings("restriction")
 public class App 
 {	

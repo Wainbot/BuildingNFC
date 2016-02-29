@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.unice.idse.model.Building;
-import fr.unice.idse.model.Floor;
+import fr.unice.idse.model.Level;
 
 public class BuildingTest extends Building {
 
@@ -18,19 +18,19 @@ public class BuildingTest extends Building {
 	@After
 	public void init() {
 		name = null;
-		floors = null;
+		levels = null;
 	}
 	
 	@Test
 	public void testConstructeurBuildingInitVariable() {
-		assertNotNull(floors);
+		assertNotNull(levels);
 		assertEquals("iut", name);
 	}
 	
 	@Test
 	public void testAddFloorIsAddinfFloorToTheFloorsList() { // LOL
-		addFloor(new Floor(0));
-		assertEquals(1, floors.size());
+		addFloor(new Level(0, new byte[0]));
+		assertEquals(1, levels.size());
 	}
 	
 	@Test
@@ -40,27 +40,27 @@ public class BuildingTest extends Building {
 	
 	@Test
 	public void testGetFloorAtReturnNullIfTheIndexIsGreaterThanTheFloorsListSize() {
-		floors.add(new Floor(0));
-		floors.add(new Floor(1));
+		levels.add(new Level(0, new byte[0]));
+		levels.add(new Level(1, new byte[0]));
 		
 		assertNull(getFloorAt(42));
 	}
 	
 	@Test
 	public void testGetFloorAtReturnNotNullIfTheIndexIsLessThanTheSizeAndPositive() {
-		floors.add(new Floor(0));
-		floors.add(new Floor(1));
+		levels.add(new Level(0, new byte[0]));
+		levels.add(new Level(1, new byte[0]));
 		
 		assertNotNull(getFloorAt(1));
 	}
 	
 	@Test
 	public void testGetFloorAtReturnTheRightFloorAtTheWantedIndex() {
-		floors.add(new Floor(0));
-		Floor floor = new Floor(1);
-		floors.add(floor);
+		levels.add(new Level(0, new byte[0]));
+		Level level = new Level(1, new byte[0]);
+		levels.add(level);
 		
-		assertEquals(floor, getFloorAt(1));
+		assertEquals(level, getFloorAt(1));
 	}
 	
 	@Test
