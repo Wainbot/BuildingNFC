@@ -2,11 +2,13 @@ package fr.unice.idse.model;
 
 import java.util.ArrayList;
 
+import fr.unice.idse.util.BusinessQuery;
+
 public class App {
 	protected ArrayList<Building> buildings;
 	
 	public App() {
-		buildings = new ArrayList<Building>();
+		buildings = BusinessQuery.listBuilding();
 	}
 	
 	public boolean addBuilding(Building building) {

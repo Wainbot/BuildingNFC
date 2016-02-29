@@ -70,7 +70,7 @@ public class BuildingServiceTest extends JerseyTest {
 	
 	@Test
 	public void testAddBuildingEnVerifiantSiIlRetourneUneErreur401SiIlManqueLeNameDansLeJSON() throws JSONException {
-		Response response = target("/building/").request().put(Entity.json("{}"));
+		Response response = target("/building/").request().put(Entity.json("{\"tagid\":\"049e0bb27a4880\"}"));
 		JSONObject json = new JSONObject(response.readEntity(String.class));
 		
 	    assertEquals(401, response.getStatus());
@@ -78,10 +78,19 @@ public class BuildingServiceTest extends JerseyTest {
 	}
 	
 	@Test
+	public void testAddBuildingEnVerifiantSiIlRetourneUneErreur401SiIlManqueLeTagDansLeJSON() throws JSONException {
+		Response response = target("/building/").request().put(Entity.json("{\"name\":\"iut\"}"));
+		JSONObject json = new JSONObject(response.readEntity(String.class));
+		
+	    assertEquals(401, response.getStatus());
+	    assertEquals("JSON invalid tagid is missing", json.getString("error"));
+	}
+	
+	@Test
 	public void testAddBuildingEnVerifiantSiIlRetourneUneErreur405SiLeNomDuBuildingExisteDeja() throws JSONException {
 		model.getApp().addBuilding(new Building("iut"));
 		
-		Response response = target("/building").request().put(Entity.json("{\"name\":\"iut\"}"));
+		Response response = target("/building").request().put(Entity.json("{\"name\":\"iut\",\"tagid\":\"049e0bb27a4880\"}"));
 		JSONObject json = new JSONObject(response.readEntity(String.class));
 		
 	    assertEquals(405, response.getStatus());
@@ -90,7 +99,7 @@ public class BuildingServiceTest extends JerseyTest {
 	
 	@Test
 	public void testAddBuildingEnVerifiantSiIlRetourne200Ok() throws JSONException {
-		Response response = target("/building").request().put(Entity.json("{\"name\":\"iut\"}"));
+		Response response = target("/building").request().put(Entity.json("{\"name\":\"iut\",\"tagid\":\"049e0bb27a4880\"}"));
 		JSONObject json = new JSONObject(response.readEntity(String.class));
 		
 	    assertEquals(200, response.getStatus());

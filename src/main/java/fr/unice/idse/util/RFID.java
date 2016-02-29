@@ -1,11 +1,11 @@
-package fr.unice.idse.rfid;
+package fr.unice.idse.util;
 
 import java.util.List;
 
 import javax.smartcardio.*;
 
 @SuppressWarnings("restriction")
-public class App 
+public class RFID 
 {	
 	private static Card card = null;
 	private static CardChannel channel = null;

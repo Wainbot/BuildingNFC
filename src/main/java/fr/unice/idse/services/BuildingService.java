@@ -18,7 +18,8 @@ import fr.unice.idse.model.Building;
 import fr.unice.idse.model.Model;
 
 /**
- * Arbre des routes : <br/>
+ * Building service regroup the different routes calling the methods of the model
+ * <h4> Arbre des routes : </h4>
  * <code> 
  * /building <br/>
  * |-- GET (list buildings) <br/>
@@ -83,7 +84,11 @@ public class BuildingService {
 				return Response.status(401).entity("{\"error\":\"JSON invalid name is missing\"}").build();
 			}
 			
-			if(!Model.getInstance().getApp().addBuilding(new Building(json.getString("name")))) {
+			if(!json.has("tagid")) {
+				return Response.status(401).entity("{\"error\":\"JSON invalid tagid is missing\"}").build();
+			}
+			
+			if(!Model.getInstance().getApp().addBuilding(new Building(json.getString("name"), json.getString("tagid")))) {
 				return Response.status(405).entity("{\"error\":\"Invalid building name\"}").build();
 			}
 			

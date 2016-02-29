@@ -12,7 +12,7 @@ import fr.unice.idse.model.Level;
 public class BuildingTest extends Building {
 
 	public BuildingTest() {
-		super("iut");
+		super("iut", "0b5dsqdqzd0816");
 	}
 
 	@After
