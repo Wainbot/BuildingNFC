@@ -38,6 +38,7 @@ public class BuildingServiceTest extends JerseyTest {
 	
 	@Test
 	public void testgetBuildingsEnVerifiantSiIlRetourneUneListeVideSiAucunBuildingsExiste() throws JSONException {
+		model.getApp().setBuildings(new ArrayList<Building>());
 		Response response = target("/building").request().get();
 		JSONObject json = new JSONObject(response.readEntity(String.class));
 		
@@ -47,6 +48,7 @@ public class BuildingServiceTest extends JerseyTest {
 	
 	@Test
 	public void testgetBuildingsEnVerifiantSiIlRetourneLaListeDesBuildingsExiste() throws JSONException {
+		model.getApp().setBuildings(new ArrayList<Building>());
 		model.getApp().addBuilding(new Building("iut"));
 		model.getApp().addBuilding(new Building("polytech"));
 		
@@ -61,7 +63,7 @@ public class BuildingServiceTest extends JerseyTest {
 	
 	@Test
 	public void testAddBuildingEnVerifiantSiIlRetourneUneErreur401SiLeJSONEstMalForme() throws JSONException {
-		Response response = target("/building/").request().put(Entity.json("{"));
+		Response response = target("/building").request().put(Entity.json("{"));
 		JSONObject json = new JSONObject(response.readEntity(String.class));
 		
 	    assertEquals(401, response.getStatus());
@@ -70,7 +72,7 @@ public class BuildingServiceTest extends JerseyTest {
 	
 	@Test
 	public void testAddBuildingEnVerifiantSiIlRetourneUneErreur401SiIlManqueLeNameDansLeJSON() throws JSONException {
-		Response response = target("/building/").request().put(Entity.json("{\"tagid\":\"049e0bb27a4880\"}"));
+		Response response = target("/building").request().put(Entity.json("{\"tagid\":\"049e0bb27a4880\"}"));
 		JSONObject json = new JSONObject(response.readEntity(String.class));
 		
 	    assertEquals(401, response.getStatus());
@@ -79,7 +81,7 @@ public class BuildingServiceTest extends JerseyTest {
 	
 	@Test
 	public void testAddBuildingEnVerifiantSiIlRetourneUneErreur401SiIlManqueLeTagDansLeJSON() throws JSONException {
-		Response response = target("/building/").request().put(Entity.json("{\"name\":\"iut\"}"));
+		Response response = target("/building").request().put(Entity.json("{\"name\":\"iut\"}"));
 		JSONObject json = new JSONObject(response.readEntity(String.class));
 		
 	    assertEquals(401, response.getStatus());

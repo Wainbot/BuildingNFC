@@ -23,7 +23,7 @@ import fr.unice.idse.model.Model;
  * <code> 
  * /building <br/>
  * |-- GET (list buildings) <br/>
- * |-- POST(add building)  <br/>
+ * |-- PUT(add building)  <br/>
  * |-- /{tagid} <br/>
  * |-- |-- PUT  (update building info) <br/>
  * |-- |-- DELETE (delete building)  <br/>
@@ -46,7 +46,6 @@ public class BuildingService {
 	 * @author Damien Clemenceau
 	 */
 	@GET
-	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getBuildings() throws JSONException {
 		Model model = Model.getInstance();
@@ -74,7 +73,6 @@ public class BuildingService {
 	 * @author Damien Clemenceau
 	 */
 	@PUT
-	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addBuilding(String strJson) {
 		try {

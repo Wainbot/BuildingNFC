@@ -22,6 +22,10 @@ public class App {
 	public ArrayList<Building> getBuildings() {
 		return buildings;
 	}
+	
+	public void setBuildings(ArrayList<Building> building) {
+		this.buildings = building;
+	}
 
 	public Building findBuildingByTagId(String tagId) {
 		Building building = null;
