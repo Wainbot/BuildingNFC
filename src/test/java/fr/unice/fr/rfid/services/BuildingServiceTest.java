@@ -110,9 +110,9 @@ public class BuildingServiceTest extends JerseyTest {
 	
 	@Test
 	public void testGetBuildingEnVerifiantSiIlTrouveBienLeBatiment() throws JSONException {
-		model.getApp().addBuilding(new Building("iut"));
+		model.getApp().addBuilding(new Building("iut", "myToken"));
 		
-		Response response = target("/building/iut").request().get();
+		Response response = target("/building/myToken").request().get();
 		JSONObject json = new JSONObject(response.readEntity(String.class));
 		
 	    assertEquals(200, response.getStatus());

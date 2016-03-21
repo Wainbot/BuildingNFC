@@ -12,10 +12,16 @@
 jetty:run install 
 ``
 
-## Launch server
+## Launch server on local
 
 `` 
 jetty:run 
+``
+
+## Launch server on server
+
+`` 
+sudo jetty:run -Djetty.port=80 > stdout.txt 2> stderr.txt &
 ``
 
 ## TODO

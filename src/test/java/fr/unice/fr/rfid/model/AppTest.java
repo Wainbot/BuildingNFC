@@ -52,31 +52,31 @@ public class AppTest extends App {
 	public void testFindByNameReturnTheWantedBuilding() {
 		Building building = new Building("iut");
 		buildings.add(building);
-		assertEquals(building, findBuildingByTagId("iut"));
+		assertEquals(building, findBuildingByName("iut"));
 	}
 	
 	@Test 
 	public void testFindByNameReturnNullWhenThereAreNotAnyBuildingInTheList() {
-		assertNull(findBuildingByTagId("iut"));
+		assertNull(findBuildingByName("iut"));
 	}
 	
 	@Test 
 	public void testFindByNameReturnNullWhenNoBuildingWithTheTagExistTillTheEndOfTheList() {
-		addBuilding(new Building("polytech"));
-		assertNull(findBuildingByTagId("iut"));
+		addBuilding(new Building("polytech", "notMyToken"));
+		assertNull(findBuildingByTagId("myToken"));
 	}
 	
 	@Test 
 	public void testFindByNameReturnNotNullWhenTheBuildingIsFindAtTheEndOfTheList() {
 		addBuilding(new Building("iut"));
 		addBuilding(new Building("polytech"));
-		assertNotNull(findBuildingByTagId("polytech"));
+		assertNotNull(findBuildingByName("polytech"));
 	}
 	
 	@Test 
 	public void testFindByNameReturnNotNullWhenTheBuildingIsFindBeforeTheEndOfTheList() {
 		addBuilding(new Building("iut"));
 		addBuilding(new Building("polytech"));
-		assertNotNull(findBuildingByTagId("iut"));
+		assertNotNull(findBuildingByName("iut"));
 	}
 }

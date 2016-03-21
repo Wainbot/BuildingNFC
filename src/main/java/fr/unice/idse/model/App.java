@@ -31,7 +31,7 @@ public class App {
 		Building building = null;
 		int i = 0;
 		while(i < buildings.size() && building == null) {
-			if(buildings.get(i).getName().equals(tagId)) {
+			if(buildings.get(i).getTag().equals(tagId)) {
 				building = buildings.get(i);
 			}
 			i++;
