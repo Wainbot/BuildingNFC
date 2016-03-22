@@ -39,6 +39,11 @@ import fr.unice.idse.model.Model;
 
 @Path("/building")
 public class BuildingService {
+	@OPTIONS
+	public Response options() {
+		return Response.status(200).build();
+	}
+	
 	/**
 	 * Get the list of building in the app.
 	 * @return Response 200 With a json containing the list of buildings : <br />
@@ -46,6 +51,7 @@ public class BuildingService {
 	 * @throws JSONException - If there is a syntax error in the source string. 
 	 * @author Damien Clemenceau
 	 */
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getBuildings() throws JSONException {
