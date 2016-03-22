@@ -1,14 +1,11 @@
 package fr.unice.fr.rfid.services;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.codehaus.jettison.json.JSONException;
@@ -29,7 +26,7 @@ public class BuildingServiceTest extends JerseyTest {
 	protected Application configure() {
 		return new ResourceConfig(BuildingService.class).getApplication();
 	}
-	/*
+	
 	@Before
 	public void init() {
 		Model.clear();
@@ -127,5 +124,5 @@ public class BuildingServiceTest extends JerseyTest {
 	    assertEquals(405, response.getStatus());
 	    assertEquals("The building with this tag id was not found", json.getString("error"));
 	}
-	*/
+	
 }
