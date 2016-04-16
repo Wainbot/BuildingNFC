@@ -1,13 +1,15 @@
 package fr.unice.fr.rfid.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import fr.unice.idse.model.Building;
 import fr.unice.idse.model.Level;
+import fr.unice.idse.model.Picture;
 
 public class BuildingTest extends Building {
 
@@ -29,7 +31,7 @@ public class BuildingTest extends Building {
 	
 	@Test
 	public void testAddFloorIsAddinfFloorToTheFloorsList() { // LOL
-		addFloor(new Level(0, new byte[0]));
+		addFloor(new Level(0, new Picture()));
 		assertEquals(1, levels.size());
 	}
 	
@@ -40,24 +42,24 @@ public class BuildingTest extends Building {
 	
 	@Test
 	public void testGetFloorAtReturnNullIfTheIndexIsGreaterThanTheFloorsListSize() {
-		levels.add(new Level(0, new byte[0]));
-		levels.add(new Level(1, new byte[0]));
+		levels.add(new Level(0, new Picture()));
+		levels.add(new Level(1, new Picture()));
 		
 		assertNull(getFloorAt(42));
 	}
 	
 	@Test
 	public void testGetFloorAtReturnNotNullIfTheIndexIsLessThanTheSizeAndPositive() {
-		levels.add(new Level(0, new byte[0]));
-		levels.add(new Level(1, new byte[0]));
+		levels.add(new Level(0, new Picture()));
+		levels.add(new Level(1, new Picture()));
 		
 		assertNotNull(getFloorAt(1));
 	}
 	
 	@Test
 	public void testGetFloorAtReturnTheRightFloorAtTheWantedIndex() {
-		levels.add(new Level(0, new byte[0]));
-		Level level = new Level(1, new byte[0]);
+		levels.add(new Level(0, new Picture()));
+		Level level = new Level(1, new Picture());
 		levels.add(level);
 		
 		assertEquals(level, getFloorAt(1));

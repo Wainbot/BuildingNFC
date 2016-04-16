@@ -17,6 +17,7 @@ import org.junit.Test;
 
 import fr.unice.idse.model.Building;
 import fr.unice.idse.model.Model;
+import fr.unice.idse.model.Picture;
 import fr.unice.idse.services.BuildingService;
 
 public class BuildingServiceTest extends JerseyTest {
@@ -46,16 +47,16 @@ public class BuildingServiceTest extends JerseyTest {
 	@Test
 	public void testgetBuildingsEnVerifiantSiIlRetourneLaListeDesBuildingsExiste() throws JSONException {
 		model.getApp().setBuildings(new ArrayList<Building>());
-		model.getApp().addBuilding(new Building("iut"));
-		model.getApp().addBuilding(new Building("polytech"));
+		model.getApp().addBuilding(new Building("iut", "tag1"));
+		model.getApp().addBuilding(new Building("polytech", "tag2"));
 		
 		Response response = target("/building").request().get();
 		JSONObject json = new JSONObject(response.readEntity(String.class));
 		
 	    assertEquals(200, response.getStatus());
 	    assertEquals(2, json.getJSONArray("buildings").length());
-	    assertEquals("{\"name\":\"iut\"}", json.getJSONArray("buildings").get(0).toString());
-	    assertEquals("{\"name\":\"polytech\"}", json.getJSONArray("buildings").get(1).toString());
+	    assertEquals("{\"name\":\"iut\",\"tag\":\"tag1\"}", json.getJSONArray("buildings").get(0).toString());
+	    assertEquals("{\"name\":\"polytech\",\"tag\":\"tag2\"}", json.getJSONArray("buildings").get(1).toString());
 	}
 	
 	@Test
@@ -107,7 +108,9 @@ public class BuildingServiceTest extends JerseyTest {
 	
 	@Test
 	public void testGetBuildingEnVerifiantSiIlTrouveBienLeBatiment() throws JSONException {
-		model.getApp().addBuilding(new Building("iut", "myToken"));
+		Building building = new Building("iut", "myToken");
+		building.setPicture(new Picture(10, null));
+		model.getApp().addBuilding(building);
 		
 		Response response = target("/building/myToken").request().get();
 		JSONObject json = new JSONObject(response.readEntity(String.class));
