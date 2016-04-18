@@ -2,22 +2,22 @@ package fr.unice.idse.model;
 
 public class Level {
 	private int level;
-	private byte[] image;
+	private Picture picture;
 
 	public Level(int level) {
 		this(level, null);
 	}
 	
-	public Level(int level, byte[] image) {
+	public Level(int level, Picture picture) {
 		this.level = level;
-		this.image = image;
+		this.picture = picture;
 	}
 	
 	public int getLevel() {
 		return level;
 	}
 	
-	public byte[] getImage() {
-		return image;
+	public Picture getPicture() {
+		return picture;
 	}
 }

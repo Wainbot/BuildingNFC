@@ -18,6 +18,7 @@ import org.junit.Test;
 import fr.unice.idse.model.Building;
 import fr.unice.idse.model.Level;
 import fr.unice.idse.model.Model;
+import fr.unice.idse.model.Picture;
 import fr.unice.idse.services.BuildingService;
 
 public class BuildingServiceTest extends JerseyTest {
@@ -47,21 +48,21 @@ public class BuildingServiceTest extends JerseyTest {
 	@Test
 	public void testgetBuildingsEnVerifiantSiIlRetourneLaListeDesBuildingsExiste() throws JSONException {
 		model.getApp().setBuildings(new ArrayList<Building>());
-		model.getApp().addBuilding(new Building("iut"));
-		model.getApp().addBuilding(new Building("polytech"));
+		model.getApp().addBuilding(new Building("iut", "tag1"));
+		model.getApp().addBuilding(new Building("polytech", "tag2"));
 		
 		Response response = target("/building").request().get();
 		JSONObject json = new JSONObject(response.readEntity(String.class));
 		
 	    assertEquals(200, response.getStatus());
 	    assertEquals(2, json.getJSONArray("buildings").length());
-	    assertEquals("{\"name\":\"iut\"}", json.getJSONArray("buildings").get(0).toString());
-	    assertEquals("{\"name\":\"polytech\"}", json.getJSONArray("buildings").get(1).toString());
+	    assertEquals("{\"name\":\"iut\",\"tag\":\"tag1\"}", json.getJSONArray("buildings").get(0).toString());
+	    assertEquals("{\"name\":\"polytech\",\"tag\":\"tag2\"}", json.getJSONArray("buildings").get(1).toString());
 	}
 	
 	@Test
 	public void testAddBuildingEnVerifiantSiIlRetourneUneErreur401SiLeJSONEstMalForme() throws JSONException {
-		Response response = target("/building").request().put(Entity.json("{"));
+		Response response = target("/building").request().post(Entity.json("{"));
 		JSONObject json = new JSONObject(response.readEntity(String.class));
 		
 	    assertEquals(401, response.getStatus());
@@ -70,7 +71,7 @@ public class BuildingServiceTest extends JerseyTest {
 	
 	@Test
 	public void testAddBuildingEnVerifiantSiIlRetourneUneErreur401SiIlManqueLeNameDansLeJSON() throws JSONException {
-		Response response = target("/building").request().put(Entity.json("{\"tagid\":\"049e0bb27a4880\"}"));
+		Response response = target("/building").request().post(Entity.json("{\"tagid\":\"049e0bb27a4880\", \"pic\":\"05656\"}"));
 		JSONObject json = new JSONObject(response.readEntity(String.class));
 		
 	    assertEquals(401, response.getStatus());
@@ -79,7 +80,7 @@ public class BuildingServiceTest extends JerseyTest {
 	
 	@Test
 	public void testAddBuildingEnVerifiantSiIlRetourneUneErreur401SiIlManqueLeTagDansLeJSON() throws JSONException {
-		Response response = target("/building").request().put(Entity.json("{\"name\":\"iut\"}"));
+		Response response = target("/building").request().post(Entity.json("{\"name\":\"iut\", \"pic\":\"05656\"}"));
 		JSONObject json = new JSONObject(response.readEntity(String.class));
 		
 	    assertEquals(401, response.getStatus());
@@ -90,7 +91,7 @@ public class BuildingServiceTest extends JerseyTest {
 	public void testAddBuildingEnVerifiantSiIlRetourneUneErreur405SiLeNomDuBuildingExisteDeja() throws JSONException {
 		model.getApp().addBuilding(new Building("iut"));
 		
-		Response response = target("/building").request().put(Entity.json("{\"name\":\"iut\",\"tagid\":\"049e0bb27a4880\"}"));
+		Response response = target("/building").request().post(Entity.json("{\"name\":\"iut\",\"tagid\":\"049e0bb27a4880\", \"pic\":\"05656\"}"));
 		JSONObject json = new JSONObject(response.readEntity(String.class));
 		
 	    assertEquals(405, response.getStatus());
@@ -99,7 +100,7 @@ public class BuildingServiceTest extends JerseyTest {
 	
 	@Test
 	public void testAddBuildingEnVerifiantSiIlRetourne200Ok() throws JSONException {
-		Response response = target("/building").request().put(Entity.json("{\"name\":\"iut\",\"tagid\":\"049e0bb27a4880\"}"));
+		Response response = target("/building").request().post(Entity.json("{\"name\":\"iut\",\"tagid\":\"049e0bb27a4880\", \"pic\":\"05656\"}"));
 		JSONObject json = new JSONObject(response.readEntity(String.class));
 		
 	    assertEquals(200, response.getStatus());
@@ -110,7 +111,7 @@ public class BuildingServiceTest extends JerseyTest {
 	public void testGetBuildingEnVerifiantSiIlTrouveBienLeBatiment() throws JSONException {
 		Building building = new Building("iut", "myToken");
 		building.addLevel(new Level(0));
-		
+		building.setPicture(new Picture(10, null));
 		model.getApp().addBuilding(building);
 		
 		Response response = target("/building/myToken").request().get();

@@ -1,11 +1,12 @@
 package fr.unice.idse.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Building {
 	protected String name, description, tag;
  	protected ArrayList<Level> levels;
-	protected byte[] image;
+	protected Picture picture;
 	
 	public Building(String name, String tag) {
 		this.levels = new ArrayList<Level>();
@@ -28,7 +29,7 @@ public class Building {
 		return null;
 	}
 	
-	public ArrayList<Level> getLevels() {
+	public List<Level> getFloors() {
 		return this.levels;
 	}
 	
@@ -44,7 +45,7 @@ public class Building {
 		return this.description;
 	}
 	
-	public void getTag(String tag) {
+	public void setTag(String tag) {
 		this.tag = tag;
 	}
 	
@@ -56,11 +57,11 @@ public class Building {
 		this.description = description;
 	}
 	
-	public byte[] getImage() {
-		return image;
+	public Picture getPicture() {
+		return picture;
 	}
 	
-	public void setImage(byte[] image) {
-		this.image = image;
+	public void setPicture(Picture picture) {
+		this.picture = picture;
 	}
 }
