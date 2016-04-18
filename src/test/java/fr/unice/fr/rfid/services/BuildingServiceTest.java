@@ -16,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.unice.idse.model.Building;
+import fr.unice.idse.model.Level;
 import fr.unice.idse.model.Model;
 import fr.unice.idse.services.BuildingService;
 
@@ -107,13 +108,17 @@ public class BuildingServiceTest extends JerseyTest {
 	
 	@Test
 	public void testGetBuildingEnVerifiantSiIlTrouveBienLeBatiment() throws JSONException {
-		model.getApp().addBuilding(new Building("iut", "myToken"));
+		Building building = new Building("iut", "myToken");
+		building.addLevel(new Level(0));
+		
+		model.getApp().addBuilding(building);
 		
 		Response response = target("/building/myToken").request().get();
 		JSONObject json = new JSONObject(response.readEntity(String.class));
 		
 	    assertEquals(200, response.getStatus());
 	    assertEquals("iut", json.getString("name"));
+	    assertEquals(0, json.getJSONArray("levels").get(0));
 	}
 	
 	@Test

@@ -4,6 +4,10 @@ public class Level {
 	private int level;
 	private byte[] image;
 
+	public Level(int level) {
+		this(level, null);
+	}
+	
 	public Level(int level, byte[] image) {
 		this.level = level;
 		this.image = image;

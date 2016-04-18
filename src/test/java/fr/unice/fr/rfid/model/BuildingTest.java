@@ -29,13 +29,13 @@ public class BuildingTest extends Building {
 	
 	@Test
 	public void testAddFloorIsAddinfFloorToTheFloorsList() { // LOL
-		addFloor(new Level(0, new byte[0]));
+		addLevel(new Level(0, new byte[0]));
 		assertEquals(1, levels.size());
 	}
 	
 	@Test
 	public void testGetFloorAtReturnNullIfTheIndexIsLessThanZero() {
-		assertNull(getFloorAt(-42));
+		assertNull(getLevelAt(-42));
 	}
 	
 	@Test
@@ -43,7 +43,7 @@ public class BuildingTest extends Building {
 		levels.add(new Level(0, new byte[0]));
 		levels.add(new Level(1, new byte[0]));
 		
-		assertNull(getFloorAt(42));
+		assertNull(getLevelAt(42));
 	}
 	
 	@Test
@@ -51,7 +51,7 @@ public class BuildingTest extends Building {
 		levels.add(new Level(0, new byte[0]));
 		levels.add(new Level(1, new byte[0]));
 		
-		assertNotNull(getFloorAt(1));
+		assertNotNull(getLevelAt(1));
 	}
 	
 	@Test
@@ -60,7 +60,7 @@ public class BuildingTest extends Building {
 		Level level = new Level(1, new byte[0]);
 		levels.add(level);
 		
-		assertEquals(level, getFloorAt(1));
+		assertEquals(level, getLevelAt(1));
 	}
 	
 	@Test

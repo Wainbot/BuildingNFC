@@ -10,12 +10,14 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.DatatypeConverter;
 
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import fr.unice.idse.model.Building;
+import fr.unice.idse.model.Level;
 import fr.unice.idse.model.Model;
 
 /**
@@ -51,7 +53,6 @@ public class BuildingService {
 	 * @throws JSONException - If there is a syntax error in the source string. 
 	 * @author Damien Clemenceau
 	 */
-
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getBuildings() throws JSONException {
@@ -105,7 +106,7 @@ public class BuildingService {
 	
 	/**
 	 * 
-	 * Get the building with the specified tag id.
+	 * Get the building with the specified tag id and is level.
 	 * @param tagId The id of a NFC tag
 	 * @return Response 405 If the tag id is not attach to a building <br/>
 	 *         Response 200 If the building was successfully added
@@ -124,6 +125,12 @@ public class BuildingService {
 		JSONObject json = new JSONObject();
 		json.put("name", building.getName());
 		json.put("image", building.getImage());
+		
+		JSONArray ja = new JSONArray();
+		for (Level level : building.getLevels()) {
+			ja.put(level.getLevel());
+		}
+		json.put("levels", ja);
 		
 		return Response.status(200).entity(json.toString()).build();
 	}

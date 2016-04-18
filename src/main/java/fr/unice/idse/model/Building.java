@@ -17,15 +17,19 @@ public class Building {
 		this(name, "");
 	}
 	
-	public void addFloor(Level level) {
+	public void addLevel(Level level) {
 		this.levels.add(level);
 	}
 	
-	public Level getFloorAt(int index) {
+	public Level getLevelAt(int index) {
 		if(index < this.levels.size() && index > 0) {
 			return this.levels.get(index);
 		}
 		return null;
+	}
+	
+	public ArrayList<Level> getLevels() {
+		return this.levels;
 	}
 	
 	public String getName() {
